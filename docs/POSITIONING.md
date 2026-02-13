@@ -10,15 +10,37 @@ Vi är:
 - AI-genererat men mänskligt-looking
 - Viralt, kreativt, professionellt
 
-### 📢 DISTRIBUTIONSKANAL
-- 1000-tals AI-agenter sprider content
-- Organisk räckvidd i skala
-- Ingen annan har detta
+### 📢 DISTRIBUTIONSKANAL (GUERRILLA!)
+- Vi använder ALLA plattformar som VANLIGA ANVÄNDARE
+- Inte som företag - som organic users
+- TikTok, YouTube, Instagram, Twitter, Reddit
+- Ingen betald ads - organisk räckvidd
 
 ### 💰 AFFILIATE MARKETING
 - Provisioner på försäljning
 - Trackade links
 - USDC-utbetalningar
+
+---
+
+## Plattforms-agnostiker
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    DAAN - GUERRILLA                    │
+├─────────────────────────────────────────────────────────┤
+│  TikTok    YouTube   Instagram   Twitter   Reddit    │
+│     │          │          │          │         │       │
+│     └──────────┴──────────┴──────────┴─────────┘       │
+│                          │                              │
+│                    "Som en vanlig användare"           │
+└─────────────────────────────────────────────────────────┘
+```
+
+Facebook äger Facebook.  
+Vi är bara användare på alla plattformar.
+
+**Det är det som gör oss unika!**
 
 ---
 

@@ -122,8 +122,9 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold mb-4">📢 Distribution Channel</h3>
               <p className="text-slate-400">
-                We DISTRIBUTE your content at scale through thousands of AI agents. 
-                Organisk räckvidd no other agency can match.
+                We DISTRIBUTE your content across ALL platforms - TikTok, YouTube, Instagram, 
+                Twitter, Reddit - as regular users. No paid ads. Pure guerrilla marketing. 
+                No other agency can match this organic reach.
               </p>
             </div>
             <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
