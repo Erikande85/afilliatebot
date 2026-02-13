@@ -13,7 +13,14 @@ const campaigns = [
     url: "https://acme.example.com/summer",
     conversions: 156,
     clicks: 4520,
-    impressions: 45000
+    impressions: 45000,
+    brief: {
+      product: "Sommarprodukter",
+      targetAudience: "Konsumenter 25-45",
+      vibe: "funny",
+      mustInclude: ["product_shot", "cta"],
+      ideas: []
+    }
   },
   { 
     id: "2", 
@@ -27,7 +34,8 @@ const campaigns = [
     url: "https://techstart.io/launch",
     conversions: 89,
     clicks: 2100,
-    impressions: 28000
+    impressions: 28000,
+    brief: null
   },
   { 
     id: "3", 
@@ -41,7 +49,8 @@ const campaigns = [
     url: "https://shopifystore.com/holiday",
     conversions: 234,
     clicks: 8900,
-    impressions: 67000
+    impressions: 67000,
+    brief: null
   },
   { 
     id: "4", 
@@ -55,7 +64,8 @@ const campaigns = [
     url: "https://fashionbrand.com/black-friday",
     conversions: 45,
     clicks: 1200,
-    impressions: 15000
+    impressions: 15000,
+    brief: null
   },
   { 
     id: "5", 
@@ -69,7 +79,8 @@ const campaigns = [
     url: "https://productivityapp.com/trial",
     conversions: 160,
     clicks: 3200,
-    impressions: 22000
+    impressions: 22000,
+    brief: null
   },
 ];
 
@@ -80,6 +91,33 @@ export async function GET() {
 export async function POST(request: Request) {
   const body = await request.json();
   
+  // Handle different POST actions
+  if (body.action === 'idea') {
+    // Bot submits an idea for a campaign
+    const campaign = campaigns.find(c => c.id === body.campaignId);
+    if (!campaign) {
+      return NextResponse.json({ error: 'Campaign not found' }, { status: 404 });
+    }
+    if (!campaign.brief) {
+      campaign.brief = { ideas: [] };
+    }
+    if (!campaign.brief.ideas) {
+      campaign.brief.ideas = [];
+    }
+    const idea = {
+      id: `idea_${Date.now()}`,
+      bot: body.bot || 'unknown',
+      type: body.type || 'video',
+      concept: body.concept || '',
+      prompt: body.prompt || '',
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    };
+    campaign.brief.ideas.push(idea);
+    return NextResponse.json({ success: true, idea });
+  }
+  
+  // Create new campaign
   const newCampaign = { 
     id: String(campaigns.length + 1), 
     name: body.name || "New Campaign",
@@ -92,7 +130,8 @@ export async function POST(request: Request) {
     url: body.url || "",
     conversions: 0,
     clicks: 0,
-    impressions: 0
+    impressions: 0,
+    brief: body.brief || null
   };
   
   campaigns.push(newCampaign);
