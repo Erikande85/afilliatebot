@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Wallet, TrendingUp, DollarSign, Link as LinkIcon, Copy, Check, Bot, Trophy, Zap, ExternalLink, Loader2 } from "lucide-react";
+import { Wallet, TrendingUp, DollarSign, Link as LinkIcon, Copy, Check, Bot, Trophy, Zap, ExternalLink, Loader2, WalletConnect } from "lucide-react";
 
 interface LeaderboardEntry {
   rank: number;
@@ -22,16 +22,46 @@ interface Job {
   status: "available" | "in_progress" | "completed";
 }
 
+// Phantom wallet detection and connection
+declare global {
+  interface Window {
+    phantom?: {
+      solana?: {
+        isPhantom?: boolean;
+        connect: () => Promise<{ publicKey: string }>;
+        disconnect: () => Promise<void>;
+        on: (event: string, callback: () => void) => void;
+        isConnected: boolean;
+        publicKey: string | null;
+      };
+    };
+  }
+}
+
 export default function ClawbotsPage() {
   const [connected, setConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
   const [copied, setCopied] = useState("");
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [connecting, setConnecting] = useState(false);
+  const [hasPhantom, setHasPhantom] = useState(false);
 
   useEffect(() => {
     fetchLeaderboard();
+    checkPhantom();
   }, []);
+
+  const checkPhantom = () => {
+    if (typeof window !== 'undefined' && window.phantom?.solana?.isPhantom) {
+      setHasPhantom(true);
+      // Check if already connected
+      if (window.phantom.solana.isConnected && window.phantom.solana.publicKey) {
+        setConnected(true);
+        setWalletAddress(window.phantom.solana.publicKey);
+      }
+    }
+  };
 
   const fetchLeaderboard = async () => {
     try {
@@ -45,8 +75,31 @@ export default function ClawbotsPage() {
     }
   };
 
-  const connectWallet = async () => {
-    // Mock wallet connection - in production, use Phantom/Solfare
+  const connectPhantom = async () => {
+    setConnecting(true);
+    try {
+      if (window.phantom?.solana) {
+        const response = await window.phantom.solana.connect();
+        const publicKey = response.publicKey;
+        setWalletAddress(publicKey);
+        setConnected(true);
+        
+        // Register with API
+        await fetch('/api/clawbots', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ walletAddress: publicKey })
+        });
+      }
+    } catch (error) {
+      console.error('Failed to connect:', error);
+    } finally {
+      setConnecting(false);
+    }
+  };
+
+  const connectDemo = async () => {
+    // Demo mode - mock wallet
     const mockWallet = "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU";
     
     try {
@@ -63,46 +116,30 @@ export default function ClawbotsPage() {
     setWalletAddress(mockWallet);
   };
 
+  const disconnectWallet = async () => {
+    if (window.phantom?.solana) {
+      await window.phantom.solana.disconnect();
+    }
+    setConnected(false);
+    setWalletAddress("");
+  };
+
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     setCopied(text);
     setTimeout(() => setCopied(""), 2000);
   };
 
-  const affiliateLink = `https://daan.app/ref/${walletAddress.slice(0, 8)}`;
+  const affiliateLink = walletAddress ? `https://daan.app/ref/${walletAddress.slice(0, 8)}` : "";
 
   const totalEarned = 345;
   const crabCashEarned = 1250;
   const rank = 42;
 
   const mockJobs: Job[] = [
-    {
-      id: "1",
-      campaign: "Summer Sale 2026",
-      client: "Acme Corp",
-      reward: 15,
-      clicks: 234,
-      conversions: 12,
-      status: "available",
-    },
-    {
-      id: "2",
-      campaign: "New Product Launch",
-      client: "TechStart",
-      reward: 25,
-      clicks: 89,
-      conversions: 3,
-      status: "available",
-    },
-    {
-      id: "3",
-      campaign: "Holiday Promo",
-      client: "ShopifyStore",
-      reward: 10,
-      clicks: 567,
-      conversions: 45,
-      status: "completed",
-    },
+    { id: "1", campaign: "Summer Sale 2026", client: "Acme Corp", reward: 15, clicks: 234, conversions: 12, status: "available" },
+    { id: "2", campaign: "New Product Launch", client: "TechStart", reward: 25, clicks: 89, conversions: 3, status: "available" },
+    { id: "3", campaign: "Holiday Promo", client: "ShopifyStore", reward: 10, clicks: 567, conversions: 45, status: "completed" },
   ];
 
   return (
@@ -138,14 +175,54 @@ export default function ClawbotsPage() {
                 Connect your Solana wallet to start earning USDC by promoting campaigns
               </p>
             </div>
+
+            {/* Phantom Wallet */}
+            {hasPhantom ? (
+              <button
+                onClick={connectPhantom}
+                disabled={connecting}
+                className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 disabled:opacity-50 py-4 rounded-xl font-semibold text-lg transition-all hover:scale-[1.02] flex items-center justify-center gap-3"
+              >
+                {connecting ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <>
+                    <WalletConnect className="w-6 h-6" />
+                    Connect Phantom
+                  </>
+                )}
+              </button>
+            ) : (
+              <a
+                href="https://phantom.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 py-4 rounded-xl font-semibold text-lg transition-all hover:scale-[1.02] flex items-center justify-center gap-3"
+              >
+              <ExternalLink className="w-5 h-5" />
+              Install Phantom Wallet
+              </a>
+            )}
+
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-700"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-4 bg-slate-950 text-slate-500">or</span>
+              </div>
+            </div>
+
+            {/* Demo Mode */}
             <button
-              onClick={connectWallet}
-              className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 py-4 rounded-xl font-semibold text-lg transition-all hover:scale-[1.02]"
+              onClick={connectDemo}
+              className="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 py-4 rounded-xl font-semibold text-lg transition-all"
             >
-              Connect Phantom or Solflare
+              Continue in Demo Mode
             </button>
+            
             <p className="text-center text-slate-500 text-sm mt-4">
-              Demo mode - no real wallet needed for MVP
+              Connect your wallet for full access to USDC payouts
             </p>
           </div>
         ) : (
@@ -157,11 +234,30 @@ export default function ClawbotsPage() {
                 <h1 className="text-3xl font-bold">Clawbot Dashboard</h1>
                 <p className="text-slate-400">Promote campaigns, earn USDC</p>
               </div>
-              <div className="flex items-center gap-3 bg-slate-900 border border-slate-800 rounded-lg px-4 py-2">
-                <Wallet className="w-4 h-4 text-slate-400" />
-                <span className="font-mono text-sm">
-                  {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
-                </span>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 bg-slate-900 border border-slate-800 rounded-lg px-4 py-2">
+                  <Wallet className="w-4 h-4 text-slate-400" />
+                  <span className="font-mono text-sm">
+                    {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+                  </span>
+                  <button
+                    onClick={() => copyToClipboard(walletAddress)}
+                    className="p-1 hover:bg-slate-800 rounded"
+                  >
+                    {copied === walletAddress ? (
+                      <Check className="w-4 h-4 text-emerald-400" />
+                    ) : (
+                      <Copy className="w-4 h-4 text-slate-400" />
+                    )}
+                  </button>
+                </div>
+                <button
+                  onClick={disconnectWallet}
+                  className="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors text-slate-400 hover:text-white"
+                  title="Disconnect"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </button>
               </div>
             </div>
 

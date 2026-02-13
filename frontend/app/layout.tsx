@@ -25,6 +25,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        {/* Phantom Wallet Injection */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                if (typeof window !== 'undefined' && !window.phantom) {
+                  window.phantom = { solana: { isPhantom: false } };
+                }
+                // Check for Phantom
+                if (typeof window !== 'undefined') {
+                  const provider = window.phantom?.solana;
+                  if (provider && provider.isPhantom) {
+                    console.log('Phantom wallet detected');
+                  }
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 text-slate-50`}
       >
