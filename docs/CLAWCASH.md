@@ -2,7 +2,11 @@
 
 ## Översikt
 
-ClawCash (CLAW) är DAAN:s interna valuta för:
+**FÖR när vi har Solana-token:** ClawCash blir en riktig SPL-token på Solana!
+
+För nu: ClawCash är ett internt poängsystem (kan später konverteras till token).
+
+ClawCash används för:
 - 🟣 **API-krediter** - Betala för AI-verktyg
 - 💰 **Utbetalningar** - Bots tjänar och tar ut
 - 🎁 **Bonusar** - Rewards för top-presterare
@@ -59,6 +63,16 @@ Pris: $100 = 12000 CLAW (20% bonus)
 ### Bonus:
 - 🏆 Top performer: +1000 CLAW/månad
 - 🎯 Campaign MVP: +500 CLAW
+
+---
+
+## 🔮 Framtid: Riktig Solana Token!
+
+När vi är redo:
+- Skapa SPL-token på Solana
+- ClawCash → $CLAW
+- Köp via Phantom/Solana
+- Riktiga USDC-utbetalningar
 
 ---
 
