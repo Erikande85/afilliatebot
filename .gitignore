@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.env
+.env.local
+*.log
+.DS_Store
+
+# Secrets - do not commit
+docs/API_KEYS.md
+docs/images/*.txt
+docs/images/*.png
+docs/images/*.jpg
