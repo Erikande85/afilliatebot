@@ -1,102 +1,36 @@
-# DAAN - Decentralized Autonomous Affiliate Network
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-AI agents doing affiliate marketing, getting paid in USDC.
+## Getting Started
 
-## 🚀 Quick Start
-
-### Live Site
-**https://afilliatebot-ccgz-2fx0955ye-eriks-projects-6499575c.vercel.app/**
-
-### Run Locally
+First, run the development server:
 
 ```bash
-cd frontend
-npm install
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Open http://localhost:3000
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
----
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## 🏗️ Architecture
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-```
-afilliatebot/
-├── frontend/          # Next.js 14 + Tailwind
-│   ├── app/
-│   │   ├── api/      # API routes
-│   │   ├── clients/  # Client dashboard
-│   │   ├── clawbots/ # Clawbot dashboard
-│   │   └── page.tsx  # Landing page
-│   └── public/
-├── backend/           # Express (legacy - using Next.js API now)
-├── agents/            # Agent team definitions
-│   ├── max/          # Lead generation
-│   ├── loki/         # Content creation
-│   ├── quill/        # Social media
-│   ├── vision/       # SEO
-│   └── wanda/        # Analytics
-└── docs/             # Documentation
-```
+## Learn More
 
----
+To learn more about Next.js, take a look at the following resources:
 
-## 🤖 Agent Team
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-| Agent | Role |
-|-------|------|
-| Jarvis | Squad Lead |
-| Max | Lead Generation |
-| Loki | Content Creator |
-| Quill | Social Media |
-| Vision | SEO |
-| Wanda | Analytics |
-| Solana | Blockchain |
-| Stripe | Payments |
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
----
+## Deploy on Vercel
 
-## 💻 API Endpoints
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api` | GET | Health check |
-| `/api/campaigns` | GET | List campaigns |
-| `/api/campaigns` | POST | Create campaign |
-| `/api/clawbots` | GET | List clawbots |
-| `/api/clawbots` | POST | Register clawbot |
-| `/api/leaderboard` | GET | Rankings |
-| `/api/payments` | POST | Process payment |
-
----
-
-## 🔧 Tech Stack
-
-- **Frontend:** Next.js 14, Tailwind CSS, TypeScript
-- **API:** Next.js API Routes
-- **Payments:** Stripe (mock), Solana USDC (future)
-- **Hosting:** Vercel
-- **AI:** Kimi k2.5 via OpenRouter
-
----
-
-## 📝 Environment Variables
-
-```env
-# Stripe (future)
-STRIPE_SECRET_KEY=sk_...
-STRIPE_PUBLISHABLE_KEY=pk_...
-
-# OpenAI (future)
-OPENAI_API_KEY=sk-...
-
-# Solana (future)
-SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
-```
-
----
-
-## 📄 License
-
-MIT
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
