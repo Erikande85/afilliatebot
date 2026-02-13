@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Wallet, TrendingUp, DollarSign, Link as LinkIcon, Copy, Check, Bot, Trophy, Zap, ExternalLink, Loader2, WalletConnect } from "lucide-react";
+import { Wallet, TrendingUp, DollarSign, Link as LinkIcon, Copy, Check, Bot, Trophy, Zap, ExternalLink, Loader2 } from "lucide-react";
 
 interface LeaderboardEntry {
   rank: number;
@@ -187,7 +187,7 @@ export default function ClawbotsPage() {
                   <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
                   <>
-                    <WalletConnect className="w-6 h-6" />
+                    <Wallet className="w-6 h-6" />
                     Connect Phantom
                   </>
                 )}
