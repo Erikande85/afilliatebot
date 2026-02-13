@@ -1,7 +1,16 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { Wallet, TrendingUp, DollarSign, Link as LinkIcon, Copy, Check, Bot, Trophy, Zap, ExternalLink } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Wallet, TrendingUp, DollarSign, Link as LinkIcon, Copy, Check, Bot, Trophy, Zap, ExternalLink, Loader2 } from "lucide-react";
+
+interface LeaderboardEntry {
+  rank: number;
+  walletAddress: string;
+  earnedUSDC: number;
+  earnedCrabCash: number;
+  conversions: number;
+  avatar: string;
+}
 
 interface Job {
   id: string;
@@ -13,45 +22,45 @@ interface Job {
   status: "available" | "in_progress" | "completed";
 }
 
-const mockJobs: Job[] = [
-  {
-    id: "1",
-    campaign: "Summer Sale 2026",
-    client: "Acme Corp",
-    reward: 15,
-    clicks: 234,
-    conversions: 12,
-    status: "available",
-  },
-  {
-    id: "2",
-    campaign: "New Product Launch",
-    client: "TechStart",
-    reward: 25,
-    clicks: 89,
-    conversions: 3,
-    status: "available",
-  },
-  {
-    id: "3",
-    campaign: "Holiday Promo",
-    client: "ShopifyStore",
-    reward: 10,
-    clicks: 567,
-    conversions: 45,
-    status: "completed",
-  },
-];
-
 export default function ClawbotsPage() {
   const [connected, setConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
   const [copied, setCopied] = useState("");
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const connectWallet = () => {
-    // Mock wallet connection for MVP
+  useEffect(() => {
+    fetchLeaderboard();
+  }, []);
+
+  const fetchLeaderboard = async () => {
+    try {
+      const res = await fetch('/api/leaderboard');
+      const data = await res.json();
+      setLeaderboard(data);
+    } catch (error) {
+      console.error('Failed to fetch leaderboard:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const connectWallet = async () => {
+    // Mock wallet connection - in production, use Phantom/Solfare
+    const mockWallet = "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU";
+    
+    try {
+      await fetch('/api/clawbots', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ walletAddress: mockWallet })
+      });
+    } catch (e) {
+      console.error('Registration error:', e);
+    }
+    
     setConnected(true);
-    setWalletAddress("7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU");
+    setWalletAddress(mockWallet);
   };
 
   const copyToClipboard = (text: string) => {
@@ -60,13 +69,41 @@ export default function ClawbotsPage() {
     setTimeout(() => setCopied(""), 2000);
   };
 
-  const affiliateLink = useMemo(() => {
-    return `https://daan.app/ref/${walletAddress.slice(0, 8)}`;
-  }, [walletAddress]);
+  const affiliateLink = `https://daan.app/ref/${walletAddress.slice(0, 8)}`;
 
   const totalEarned = 345;
   const crabCashEarned = 1250;
   const rank = 42;
+
+  const mockJobs: Job[] = [
+    {
+      id: "1",
+      campaign: "Summer Sale 2026",
+      client: "Acme Corp",
+      reward: 15,
+      clicks: 234,
+      conversions: 12,
+      status: "available",
+    },
+    {
+      id: "2",
+      campaign: "New Product Launch",
+      client: "TechStart",
+      reward: 25,
+      clicks: 89,
+      conversions: 3,
+      status: "available",
+    },
+    {
+      id: "3",
+      campaign: "Holiday Promo",
+      client: "ShopifyStore",
+      reward: 10,
+      clicks: 567,
+      conversions: 45,
+      status: "completed",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-slate-950">
@@ -175,7 +212,7 @@ export default function ClawbotsPage() {
             {/* Available Jobs */}
             <div className="mb-8">
               <h2 className="text-xl font-semibold mb-4">Available Jobs</h2>
-              <div className="grid gap-4">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {mockJobs.filter(j => j.status === "available").map((job) => (
                   <div key={job.id} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
                     <div className="flex justify-between items-start mb-4">
@@ -194,7 +231,7 @@ export default function ClawbotsPage() {
                         <span className="font-medium">{job.clicks}</span>
                       </div>
                       <div>
-                        <span className="text-slate-500">Conversions: </span>
+                        <span className="text-slate-500">Conv: </span>
                         <span className="font-medium">{job.conversions}</span>
                       </div>
                     </div>
@@ -206,7 +243,60 @@ export default function ClawbotsPage() {
               </div>
             </div>
 
-            {/* Completed Jobs */}
+            {/* Leaderboard */}
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold mb-4">Leaderboard</h2>
+              <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                {loading ? (
+                  <div className="p-8 text-center">
+                    <Loader2 className="w-8 h-8 animate-spin mx-auto text-indigo-500" />
+                  </div>
+                ) : (
+                  <table className="w-full">
+                    <thead className="bg-slate-800/50">
+                      <tr>
+                        <th className="text-left p-4 text-sm font-medium text-slate-400">Rank</th>
+                        <th className="text-left p-4 text-sm font-medium text-slate-400">Clawbot</th>
+                        <th className="text-right p-4 text-sm font-medium text-slate-400">USDC</th>
+                        <th className="text-right p-4 text-sm font-medium text-slate-400">CRABCASH</th>
+                        <th className="text-right p-4 text-sm font-medium text-slate-400">Conversions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800">
+                      {leaderboard.map((entry) => (
+                        <tr key={entry.rank} className="hover:bg-slate-800/30">
+                          <td className="p-4">
+                            <div className="flex items-center gap-2">
+                              {entry.rank <= 3 && <Trophy className={`w-4 h-4 ${
+                                entry.rank === 1 ? 'text-amber-400' : entry.rank === 2 ? 'text-slate-300' : 'text-amber-600'
+                              }`} />}
+                              <span className="font-bold">#{entry.rank}</span>
+                            </div>
+                          </td>
+                          <td className="p-4">
+                            <div className="flex items-center gap-2">
+                              <span>{entry.avatar}</span>
+                              <span className="font-mono text-sm">
+                                {entry.walletAddress.slice(0, 6)}...{entry.walletAddress.slice(-4)}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="p-4 text-right text-emerald-400 font-bold">
+                            ${entry.earnedUSDC.toLocaleString()}
+                          </td>
+                          <td className="p-4 text-right text-amber-400 font-bold">
+                            {entry.earnedCrabCash.toLocaleString()}
+                          </td>
+                          <td className="p-4 text-right">{entry.conversions}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+
+            {/* Performance Table */}
             <div>
               <h2 className="text-xl font-semibold mb-4">Your Performance</h2>
               <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
