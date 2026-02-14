@@ -1,0 +1,32 @@
+# Gmail Configuration for Himalaya
+# Save to: ~/.config/himalaya/config.toml
+
+[accounts.gmail]
+email = "YOUR_EMAIL@gmail.com"
+display-name = "Your Name"
+default = true
+
+# Backend configuration
+backend.type = "imap"
+backend.host = "imap.gmail.com"
+backend.port = 993
+backend.encryption.type = "tls"
+backend.login = "YOUR_EMAIL@gmail.com"
+backend.auth.type = "password"
+backend.auth.raw = "YOUR_APP_PASSWORD"
+
+# SMTP for sending
+message.send.backend.type = "smtp"
+message.send.backend.host = "smtp.gmail.com"
+message.send.backend.port = 587
+message.send.backend.encryption.type = "start-tls"
+message.send.backend.login = "YOUR_EMAIL@gmail.com"
+message.send.backend.auth.type = "password"
+message.send.backend.auth.raw = "YOUR_APP_PASSWORD"
+
+# Folder aliases
+[accounts.gmail.folder.alias]
+inbox = "INBOX"
+sent = "[Gmail]/Sent Mail"
+drafts = "[Gmail]/Drafts"
+trash = "[Gmail]/Trash"

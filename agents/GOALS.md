@@ -1,88 +1,138 @@
-# DAAN GOALS - Long-term Objectives
+# DAAN Long-term Goals
 
-## How This Works
+## Q1 2026 Objectives
 
-Dump your BIG GOALS here. Jarvis (the agent squad lead) will:
-1. Read these goals every day
-2. Break them into smaller tasks
-3. Assign tasks to agents
-4. Build mini-apps/tools over night
-5. Report progress
+### Goal 1: Launch DAAN MVP to Production
+**Why:** Proving concept with real users and revenue
+**Success Metrics:**
+- First paying client
+- 3 active campaigns running
+- 10 registered clawbots
+
+**Milestones:**
+- [ ] Backend deployed on Railway (production API)
+- [ ] Email automation (inbox zero + outbound)
+- [ ] First lead converted to client
+- [ ] First campaign goes live
+- [ ] First conversion tracked + paid
+
+**Tools to Build:**
+- [ ] Production database (PostgreSQL on Railway)
+- [ ] Email templates + automation
+- [ ] Lead tracking dashboard
+- [ ] Campaign analytics
 
 ---
 
-## Format
+### Goal 2: Build Agent Automation Pipeline
+**Why:** Agents work 24/7 without manual intervention
+**Success Metrics:**
+- 80% of tasks automated
+- Daily standup reports
+- Overnight code deployments
 
-```
-## Q1 2026 GOALS
-
-### Goal: [What we want to achieve]
-**Why:** [The reason - motivation]
-**Success:** [How we know we made it]
 **Milestones:**
-- [ ] Milestone 1
-- [ ] Milestone 2
+- [ ] Jarvis morning standup (daily task breakdown)
+- [ ] Jarvis overnight builds (auto-deploy tools)
+- [ ] Content factory pipeline (research → write → post)
+- [ ] Lead gen automation (find → qualify → outreach)
 
-### Another Goal...
-```
+**Tools to Build:**
+- [ ] Task queue system
+- [ ] Build automation scripts
+- [ ] Content calendar
+- [ ] Lead scoring algorithm
 
 ---
 
-## CURRENT GOALS
+### Goal 3: Hit $10K MRR (Monthly Recurring Revenue)
+**Why:** Sustainable business model
+**Success Metrics:**
+- 10 paying clients
+- $1K average contract value
+- 80% retention rate
 
-### Goal: Launch DAAN MVP
-**Why:** We need to prove the concept works
-**Success:** First paying customer
 **Milestones:**
-- [ ] Website live with clear value prop
-- [ ] First campaign created
-- [ ] First bot active
-- [ ] First conversion
-
-### Goal: Get 10 Active Clawbots
-**Why:** Network effects - more bots = more reach
-**Success:** 10 bots with connected wallets
-**Milestones:**
-- [ ] Clawbot dashboard works
-- [ ] Wallet connection works
-- [ ] Easy onboarding
-- [ ] 10 signups
-
-### Goal: First $10K Revenue
-**Why:** Prove the business model
-**Success:** $10K in payments received
-**Milestones:**
-- [ ] Payment system works (Stripe + USDC)
-- [ ] 5 campaigns sold
 - [ ] Pricing finalized
+- [ ] 5 beta clients onboarded
+- [ ] Case studies created
+- [ ] Referral program launched
+
+**Tools to Build:**
+- [ ] Billing dashboard
+- [ ] Client portal
+- [ ] Analytics/ROI calculator
+- [ ] Referral tracking
 
 ---
 
-## COMPLETED GOALS
+## This Week's Focus
 
-(None yet - you're just getting started)
+### Priority 1: Infrastructure
+- [ ] Railway backend deployed
+- [ ] Database connected
+- [ ] Email configured
+
+### Priority 2: Automation
+- [ ] Overnight builds working
+- [ ] Daily standup reports
+- [ ] Lead gen automated
+
+### Priority 3: Growth
+- [ ] 10 new leads
+- [ ] 3 proposals sent
+- [ ] 1 client closed
 
 ---
 
-# INSTRUCTIONS FOR JARVIS
+## Jarvis Overnight Build Queue
 
-Every morning, Jarvis should:
+### Ready to Build:
+1. **Lead Tracker Dashboard** - Track all prospects in one place
+2. **Campaign Analytics** - Show ROI to clients  
+3. **Bot Performance Leaderboard** - Gamify clawbot activity
+4. **Content Calendar** - Plan posts across platforms
+5. **Payment Status Page** - Show earnings/payouts
 
-1. **Read GOALS.md**
-2. **Break down today's tasks** from the milestones
-3. **Assign to agents** via cron or direct message
-4. **Build mini-tools** if something is missing
-5. **Report progress** in #daily-standup
+### Building Next:
+- [ ] Lead Tracker (tonight)
 
 ---
 
-## Mini-Apps to Build (Ideas)
+## Daily Agent Schedule
 
-When a goal needs a tool, build it overnight:
+| Time | Agent | Task |
+|------|-------|------|
+| 07:00 | Inbox Zero | Process emails |
+| 08:00 | Jarvis | Morning standup |
+| 09:00 | Max | Lead generation |
+| 10:00 | Rex | Market research |
+| 11:00 | Quill | Social media |
+| 12:00 | Chief | Strategy review |
+| 13:00 | Loki | Content creation |
+| 14:00 | Vision | SEO analysis |
+| 15:00 | Max | Lead generation |
+| 16:00 | Quill | Social engagement |
+| 17:00 | Loki | Content creation |
+| 18:00 | Chief | Evening review |
+| 19:00 | Rex | Research wrap-up |
+| 20:00 | Quill | Final posts |
+| 21:00 | Chief | Strategy check |
+| 02:00 | Jarvis | Overnight builds |
 
-- Lead tracker dashboard
-- Campaign manager UI
-- Bot performance leaderboard
-- Content calendar
-- Payment tracker
-- Analytics dashboard
+---
+
+## Success Criteria Checklist
+
+- [ ] Website live and fast
+- [ ] API responding <200ms
+- [ ] Agents working autonomously
+- [ ] Daily reports generated
+- [ ] First client onboarded
+- [ ] First payment received
+- [ ] First conversion tracked
+
+---
+
+Last Updated: 2026-02-14
+Next Review: 2026-02-15
